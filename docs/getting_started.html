@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Uniter</title>
+
+        <link rel="stylesheet" href="http://uniter.github.io/css/bootstrap.min.css">
+        <link rel="stylesheet" href="http://uniter.github.io/css/font-awesome.min.css">
+        <link rel="stylesheet" href="http://uniter.github.io/css/highlight.tomorrow-night.css">
+        <link rel="stylesheet" href="http://uniter.github.io/css/main.css">
+    </head>
+    <body>
+
+        <header class="navbar navbar-default navbar-fixed-top">
+
+            <a class="navbar-brand" href="http://uniter.github.io/">
+                Uniter
+                <small class="hidden-xs hidden-sm">
+                    PHP in the Browser and NodeJS
+                </small>
+            </a>
+
+                            <a href="https://github.com/Uniter/uniter">
+                    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png">
+                </a>
+            
+        </header>
+
+        <main class="container-fluid">
+            <div class="row">
+
+                
+                    <nav id="sidebar" class="col-sm-3 col-lg-2" role="navigation">
+
+                                                    <p class="text-muted">
+                                Documentation
+                            </p>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                                                    <li class="">
+                                        <a href="http://uniter.github.io/index.html">
+                                            Home page
+                                        </a>
+                                    </li>
+                                                                    <li class="">
+                                        <a href="http://uniter.github.io/docs/getting_started.html">
+                                            Getting started!
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        
+                    </nav>
+
+                
+                <section class="col-sm-offset-3 col-lg-offset-2 col-sm-9 col-lg-10">
+                    <h1 id="getting-started-with-uniter">Getting started with Uniter</h1>
+<p>You can use Uniter in more than one way:</p>
+<ul>
+<li>inside NodeJS, or</li>
+<li>inside the Browser.</li>
+</ul>
+<h2 id="uniter-in-the-browser">Uniter in the browser</h2>
+<p>In order to build your PHP code for the browser, you will be needing a build tool. Currently, there is a basic Browserify transform called <code>phpify</code>. It maps out all of your dependencies and loads them, plus the runtime, into one output bundle.</p>
+<p>To install, we first need to have <code>browserify</code> installed:</p>
+<pre><code>npm -g install browserify</code></pre>
+<p>If you are on a UNXI system, such as Mac OS X or Linux, you may need to prefix the above command with <code>sudo</code>. But if you plan to use Browserify as a local program, you are advised to edit your <code>package.json</code> file:</p>
+<pre><code class="language-json">{
+    "name": "your-project",
+    "version": "0.0.0",
+    "scripts": {
+        "browserify": "browserify"
+    }
+}</code></pre>
+<p>Now, use this command instead:</p>
+<pre><code>npm install --save-dev browserify</code></pre>
+<p>And you are good to go with a local copy of browserify. A regular install of your package won't include it - if you want, change <code>--save-dev</code> to <code>-save</code>. In most cases, you won't need this.</p>
+<p>Now, we need to install the actual transformer that will run your PHP code through Uniter:</p>
+<pre><code>npm install --save-dev phpify</code></pre>
+<p>Done. Now all you need to do is put together a basic little Uniter project. You can find a demo here: <a href="https://github.com/uniter/phpify-demo">Uniter/phpify-demo</a> (Note: Yes, we are working on a WebPack compatible version. Don't get confused by the existence of <code>webpack.config.js</code> just yet.)</p>
+<h2 id="uniter-in-nodejs">Uniter in NodeJS</h2>
+<p>Using Uniter in NodeJS is super straight forward:</p>
+<ol>
+<li>Install <code>uniter-node</code>: <code>npm install --save uniter-node</code></li>
+<li>In your main JS file, like <code>app.js</code>, register Uniter.</li>
+<li>Require any PHP file like your usual JS files, they'll just work!</li>
+</ol>
+<p>To register Uniter with NodeJS, all you have to do is something like this:</p>
+<pre><code class="language-javascript">require("uniter-node")();</code></pre>
+<p>And that's it.</p>
+<pre><code class="language-javascript">var PhpModule = require("./my_php_module.php");
+// Or you can ommit the extension
+var PhpModule2 = require("./module2"); // ./module2.php</code></pre>
+<p>Within Uniter PHP, you can export values just like you would expect:</p>
+<pre><code class="language-php">&lt;?php
+$module-&gt;exports-&gt;myString = "Hello, World!";</code></pre>
+                </section>
+
+            </div>
+        </main>
+
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="http://yandex.st/highlightjs/7.5/highlight.min.js"></script>
+
+        <script>
+            $(function() {
+                $("section>h1").wrap('<div class="page-header" />');
+                // Syntax highlighting
+                hljs.initHighlightingOnLoad();
+            });
+        </script>
+
+    </body>
+</html>
