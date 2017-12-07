@@ -5,7 +5,8 @@
         "couscous/couscous": "^1.6"
     },
     "scripts": {
-        "docs:preview": "couscous preview 0.0.0.0:1234"
+        "docs:preview": "couscous preview 0.0.0.0:1234",
+        "docs:deploy": "couscous deploy --branch=master"
     },
     "license": "MIT",
     "authors": [
