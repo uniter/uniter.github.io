@@ -1,0 +1,21 @@
+{
+    "name": "uniter/uniter.github.io",
+    "description": "Uniter documentation",
+    "require-dev": {
+        "couscous/couscous": "^1.6"
+    },
+    "scripts": {
+        "docs:preview": "couscous preview 0.0.0.0:1234"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dan Phillimore",
+            "email": "dan@ovms.co"
+        },
+        {
+            "name": "Ingwie Phoenix",
+            "email": "ingwie2000@googlemail.com"
+        }
+    ]
+}

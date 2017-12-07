@@ -1,12 +1,8 @@
-template:
-    # Name of the directory containing the website template (default is "website")
-    # directory: website
-    # Or if you are using a remote template, you can set the Git URL
-    # FIXME: Write own template, WebPack integration
-    url: https://github.com/CouscousPHP/Template-Dark.git
+# Base URL of the published website
+baseUrl: https://uniter.github.io/
 
 github:
-    user: Uniter
+    user: asmblah
     repo: uniter
 
 # List of directories to exclude from the processing (default contains "vendor" and "website")
@@ -15,25 +11,46 @@ exclude:
     - vendor
     - misc
 
-# Any variable you put in this file is also available in the Twig layouts:
 title: Uniter
-subTitle: PHP in the Browser and NodeJS
+subTitle: Run PHP client-side in the browser or in Node.js.
+logo:
+    url: https://asmblah.github.io/uniter/img/logo.jpg
+    alt: Uniter
+footerText: >
+    Copyright ©️ Dan Phillimore (asmblah).
+    Uniter is not affiliated with Zend or the PHP Group.
+#googleAnalyticsCode: GOOGLE-ANALYTICS-CODE
 
-# Base URL of the published website (no "/" at the end!)
-baseUrl: http://uniter.github.io
-
-# Menu
-# Each section has an ID, a name and items.
-# Each item is identified by an ID and has a name and either absoluteUrl or relativeUrl property.
-# All the .md files are .html files, but the paths are the same.
+# The left menu bar
 menu:
     sections:
         main:
-            name: Documentation
+            name: Getting started
             items:
-                home:
-                    text: Home page
-                    relativeUrl: index.html
-                gettingStarted:
-                    text: Getting started!
-                    relativeUrl: docs/getting_started.html
+                what_is_uniter:
+                    text: What is Uniter?
+                    relativeUrl: ''
+                hello_world:
+                    text: Hello world!
+                    relativeUrl: docs/uniter/ultra_simple_hello_world.html
+                hello_world_webpack:
+                    text: Hello world part 2 (with Webpack)
+                    relativeUrl: docs/uniter/webpack_hello_world.html
+                faq:
+                    text: FAQ
+                    relativeUrl: docs/general/faq.html
+        composer:
+            name: Composer
+            items:
+                autoloader:
+                    text: Autoloader in the browser
+                    relativeUrl: docs/composer/autoloader.html
+        symfony:
+            name: Client-side Symfony
+            items:
+                di:
+                    text: DependencyInjection component
+                    relativeUrl: docs/symfony/dependency_injection_component.html
+                event_dispatcher:
+                    text: EventDispatcher component
+                    relativeUrl: docs/symfony/event_dispatcher_component.html
