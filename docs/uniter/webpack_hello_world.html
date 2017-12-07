@@ -98,46 +98,128 @@
 
                 
                 <section class="col-sm-9 col-lg-10 content">
-                    <h1 id="getting-started-with-uniter">Getting started with Uniter</h1>
-<p>You can use Uniter in more than one way:</p>
-<ul>
-<li>inside NodeJS, or</li>
-<li>inside the Browser.</li>
-</ul>
-<h2 id="uniter-in-the-browser">Uniter in the browser</h2>
-<p>In order to build your PHP code for the browser, you will be needing a build tool. Currently, there is a basic Browserify transform called <code>phpify</code>. It maps out all of your dependencies and loads them, plus the runtime, into one output bundle.</p>
-<p>To install, we first need to have <code>browserify</code> installed:</p>
-<pre><code>npm -g install browserify</code></pre>
-<p>If you are on a UNXI system, such as Mac OS X or Linux, you may need to prefix the above command with <code>sudo</code>. But if you plan to use Browserify as a local program, you are advised to edit your <code>package.json</code> file:</p>
+                    <h1 id="webpack-hello-world">Webpack hello world</h1>
+<p>In this example we're going to create a simple HTML page with some text and two buttons,
+then attach a click listener to each button that changes the text displayed -
+but we're going to do it using PHP that we'll pre-transpile to JavaScript using Webpack and the Uniter loader.</p>
+<blockquote>
+<p>If you're in a hurry, you can <a href="https://github.io/uniter/webpack-hello-world">check out the finished example here</a>.</p>
+</blockquote>
+<h2 id="step-1">Step 1</h2>
+<p>Install all the tools you're going to need:</p>
+<pre><code class="language-shell">npm install --save-dev phpify source-map-loader transform-loader babel-loader babel-core babel-preset-env webpack</code></pre>
+<h2 id="step-2">Step 2</h2>
+<p>Add your PHPify config to <code>package.json</code>:</p>
 <pre><code class="language-json">{
-    "name": "your-project",
-    "version": "0.0.0",
-    "scripts": {
-        "browserify": "browserify"
+    ...
+    "phpify": {
+        "phpToJS": {
+            "sync": true
+        }
     }
 }</code></pre>
-<p>Now, use this command instead:</p>
-<pre><code>npm install --save-dev browserify</code></pre>
-<p>And you are good to go with a local copy of browserify. A regular install of your package won't include it - if you want, change <code>--save-dev</code> to <code>-save</code>. In most cases, you won't need this.</p>
-<p>Now, we need to install the actual transformer that will run your PHP code through Uniter:</p>
-<pre><code>npm install --save-dev phpify</code></pre>
-<p>Done. Now all you need to do is put together a basic little Uniter project. You can find a demo here: <a href="https://github.com/uniter/phpify-demo">Uniter/phpify-demo</a> (Note: Yes, we are working on a WebPack compatible version. Don't get confused by the existence of <code>webpack.config.js</code> just yet.)</p>
-<h2 id="uniter-in-nodejs">Uniter in NodeJS</h2>
-<p>Using Uniter in NodeJS is super straight forward:</p>
-<ol>
-<li>Install <code>uniter-node</code>: <code>npm install --save uniter-node</code></li>
-<li>In your main JS file, like <code>app.js</code>, register Uniter.</li>
-<li>Require any PHP file like your usual JS files, they'll just work!</li>
-</ol>
-<p>To register Uniter with NodeJS, all you have to do is something like this:</p>
-<pre><code class="language-javascript">require("uniter-node")();</code></pre>
-<p>And that's it.</p>
-<pre><code class="language-javascript">var PhpModule = require("./my_php_module.php");
-// Or you can ommit the extension
-var PhpModule2 = require("./module2"); // ./module2.php</code></pre>
-<p>Within Uniter PHP, you can export values just like you would expect:</p>
+<blockquote>
+<p>The <code>sync</code> option enables the synchronous mode for Uniter. In most cases you'll want to stick to synchronous mode,
+but if you need to call something that may block like <code>usleep(...)</code>, you'll need to switch to async mode.
+See the [async vs sync mode]() section.</p>
+</blockquote>
+<h2 id="step-3">Step 3</h2>
+<p>Create your HTML page <code>index.html</code>:</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My web page&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;My web page&lt;/h1&gt;
+
+        &lt;p id="myMessage"&gt;Click a button to change me!&lt;/p&gt;
+
+        &lt;button type="button" id="helloButton"&gt;Hello!&lt;/button&gt;
+        &lt;button type="button" id="worldButton"&gt;World!&lt;/button&gt;
+
+        &lt;script src="./dist/my_bundle.js"&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h2 id="step-4">Step 4</h2>
+<p>Create your PHP file that will return a closure to attach the buttons' behaviours, <code>binder.php</code>:</p>
 <pre><code class="language-php">&lt;?php
-$module-&gt;exports-&gt;myString = "Hello, World!";</code></pre>
+
+print 'Hello from binder.php!';
+
+return function ($document) {
+    $messageBox = $document-&gt;getElementById('myMessage');
+
+    $document-&gt;getElementById('helloButton')-&gt;addEventListener('click', function () use ($messageBox) {
+        $messageBox-&gt;textContent = 'You clicked Hello!';
+    });
+
+    $document-&gt;getElementById('worldButton')-&gt;addEventListener('click', function () use ($messageBox) {
+        $messageBox-&gt;textContent = 'You clicked World!';
+    });
+};</code></pre>
+<h2 id="step-5">Step 5</h2>
+<p>Create your entrypoint JS file <code>my_app.js</code>:</p>
+<pre><code class="language-javascript">// Run the PHP file, capture its result Closure
+// and cast it to a JavaScript function we can call
+const binderModule = require('./binder.php')();
+
+// Hook stdout and stderr up to the console
+binderModule.getStdout().on('data', function (data) {
+    console.info(data);
+});
+binderModule.getStderr().on('data', function (data) {
+    console.warn(data);
+});
+
+const binder = binderModule.execute().getNative();
+
+// Call the PHP closure function returned from binder.php, from JavaScript!
+binder(document);</code></pre>
+<h2 id="step-6">Step 6</h2>
+<p>Create your Webpack config file <code>webpack.config.js</code>:</p>
+<pre><code class="language-javascript">module.exports = {
+    context: __dirname,
+    entry: './my_app',
+    module: {
+        rules: [
+            {
+                // PHPify transpiles your PHP code to JavaScript,
+                // so Webpack can include it in your JS bundle for you
+                // and it can be run in the browser.
+                test: /\.php$/,
+                use: 'transform-loader?phpify'
+            },
+            {
+                // PHPify is (at the moment) a Browserify transform and not
+                // a Webpack loader, so we need to extract the source map
+                // it generates and apply it to Webpack's for it to work properly.
+                test: /\.php/,
+                use: 'source-map-loader',
+                enforce: 'post'
+            },
+            {
+                // This is the standard Babel setup to enable ES5 support
+                test: /\.js$/,
+                exclude: /\bnode_modules\b/,
+                use: {
+                    loader: 'babel-loader?presets=env'
+                }
+            }
+        ]
+    },
+    output: {
+        path: __dirname + '/dist/',
+        filename: 'my_bundle.js'
+    }
+};</code></pre>
+<h2 id="step-7">Step 7</h2>
+<p>Build your bundle with Webpack:</p>
+<pre><code class="language-shell">node_modules/.bin/webpack --devtool source-map</code></pre>
+<p>You'll probably find it handy to add an NPM script for your webpack build command above.</p>
+<p>There's one <a href="https://github.com/uniter/webpack-hello-world/blob/master/package.json">in the complete demo repository for this example</a>.</p>
+<h2 id="step-8">Step 8</h2>
+<p>Open <code>index.html</code> in a browser!</p>
                 </section>
 
             </div>

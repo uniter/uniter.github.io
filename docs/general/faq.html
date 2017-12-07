@@ -98,46 +98,25 @@
 
                 
                 <section class="col-sm-9 col-lg-10 content">
-                    <h1 id="getting-started-with-uniter">Getting started with Uniter</h1>
-<p>You can use Uniter in more than one way:</p>
-<ul>
-<li>inside NodeJS, or</li>
-<li>inside the Browser.</li>
-</ul>
-<h2 id="uniter-in-the-browser">Uniter in the browser</h2>
-<p>In order to build your PHP code for the browser, you will be needing a build tool. Currently, there is a basic Browserify transform called <code>phpify</code>. It maps out all of your dependencies and loads them, plus the runtime, into one output bundle.</p>
-<p>To install, we first need to have <code>browserify</code> installed:</p>
-<pre><code>npm -g install browserify</code></pre>
-<p>If you are on a UNXI system, such as Mac OS X or Linux, you may need to prefix the above command with <code>sudo</code>. But if you plan to use Browserify as a local program, you are advised to edit your <code>package.json</code> file:</p>
-<pre><code class="language-json">{
-    "name": "your-project",
-    "version": "0.0.0",
-    "scripts": {
-        "browserify": "browserify"
-    }
-}</code></pre>
-<p>Now, use this command instead:</p>
-<pre><code>npm install --save-dev browserify</code></pre>
-<p>And you are good to go with a local copy of browserify. A regular install of your package won't include it - if you want, change <code>--save-dev</code> to <code>-save</code>. In most cases, you won't need this.</p>
-<p>Now, we need to install the actual transformer that will run your PHP code through Uniter:</p>
-<pre><code>npm install --save-dev phpify</code></pre>
-<p>Done. Now all you need to do is put together a basic little Uniter project. You can find a demo here: <a href="https://github.com/uniter/phpify-demo">Uniter/phpify-demo</a> (Note: Yes, we are working on a WebPack compatible version. Don't get confused by the existence of <code>webpack.config.js</code> just yet.)</p>
-<h2 id="uniter-in-nodejs">Uniter in NodeJS</h2>
-<p>Using Uniter in NodeJS is super straight forward:</p>
-<ol>
-<li>Install <code>uniter-node</code>: <code>npm install --save uniter-node</code></li>
-<li>In your main JS file, like <code>app.js</code>, register Uniter.</li>
-<li>Require any PHP file like your usual JS files, they'll just work!</li>
-</ol>
-<p>To register Uniter with NodeJS, all you have to do is something like this:</p>
-<pre><code class="language-javascript">require("uniter-node")();</code></pre>
-<p>And that's it.</p>
-<pre><code class="language-javascript">var PhpModule = require("./my_php_module.php");
-// Or you can ommit the extension
-var PhpModule2 = require("./module2"); // ./module2.php</code></pre>
-<p>Within Uniter PHP, you can export values just like you would expect:</p>
-<pre><code class="language-php">&lt;?php
-$module-&gt;exports-&gt;myString = "Hello, World!";</code></pre>
+                    <h1 id="faq">FAQ</h1>
+<h2 id="q-is-it-fast-enough">Q: Is it fast enough?</h2>
+<p>A: As with any browser-side work you do, the profiler is your friend.
+The value system (see <a href="#q-how-are-floats-vs-ints-handled">Q: How are floats vs. ints handled?</a>) adds a fair amount of overhead,
+so you may find that the equivalent code written in vanilla JS is faster than writing the same logic
+in PHP and transpiling it down to JS with Uniter.</p>
+<h2 id="q-how-are-floats-vs-ints-handled">Q: How are floats vs. ints handled?</h2>
+<p>Due to nuances in value handling between JS and PHP, Uniter handles primitive value types
+like strings and numbers specially. This means it can still distinguish between an integer and a float,
+even though JavaScript only has one value type for both: Number.</p>
+<h2 id="q-why">Q: Why?</h2>
+<p>A: The goal here isn't to try to replace JavaScript on the browser-side - that would be crazy.
+Instead, we can take existing PHP code, transpile it down to JavaScript in much the same way
+as we would with ES6-&gt;ES5 with Babel, and then run it in the browser.</p>
+<p>This means you can take a package that already exists on Packagist (like a Symfony component),
+install it with Composer and use it browser-side too.</p>
+<blockquote>
+<p>See <a href="../composer/autoloader.html">the Composer autoloader section</a> for an explanation of how this works.</p>
+</blockquote>
                 </section>
 
             </div>

@@ -98,46 +98,26 @@
 
                 
                 <section class="col-sm-9 col-lg-10 content">
-                    <h1 id="getting-started-with-uniter">Getting started with Uniter</h1>
-<p>You can use Uniter in more than one way:</p>
-<ul>
-<li>inside NodeJS, or</li>
-<li>inside the Browser.</li>
-</ul>
-<h2 id="uniter-in-the-browser">Uniter in the browser</h2>
-<p>In order to build your PHP code for the browser, you will be needing a build tool. Currently, there is a basic Browserify transform called <code>phpify</code>. It maps out all of your dependencies and loads them, plus the runtime, into one output bundle.</p>
-<p>To install, we first need to have <code>browserify</code> installed:</p>
-<pre><code>npm -g install browserify</code></pre>
-<p>If you are on a UNXI system, such as Mac OS X or Linux, you may need to prefix the above command with <code>sudo</code>. But if you plan to use Browserify as a local program, you are advised to edit your <code>package.json</code> file:</p>
-<pre><code class="language-json">{
-    "name": "your-project",
-    "version": "0.0.0",
-    "scripts": {
-        "browserify": "browserify"
-    }
-}</code></pre>
-<p>Now, use this command instead:</p>
-<pre><code>npm install --save-dev browserify</code></pre>
-<p>And you are good to go with a local copy of browserify. A regular install of your package won't include it - if you want, change <code>--save-dev</code> to <code>-save</code>. In most cases, you won't need this.</p>
-<p>Now, we need to install the actual transformer that will run your PHP code through Uniter:</p>
-<pre><code>npm install --save-dev phpify</code></pre>
-<p>Done. Now all you need to do is put together a basic little Uniter project. You can find a demo here: <a href="https://github.com/uniter/phpify-demo">Uniter/phpify-demo</a> (Note: Yes, we are working on a WebPack compatible version. Don't get confused by the existence of <code>webpack.config.js</code> just yet.)</p>
-<h2 id="uniter-in-nodejs">Uniter in NodeJS</h2>
-<p>Using Uniter in NodeJS is super straight forward:</p>
-<ol>
-<li>Install <code>uniter-node</code>: <code>npm install --save uniter-node</code></li>
-<li>In your main JS file, like <code>app.js</code>, register Uniter.</li>
-<li>Require any PHP file like your usual JS files, they'll just work!</li>
-</ol>
-<p>To register Uniter with NodeJS, all you have to do is something like this:</p>
-<pre><code class="language-javascript">require("uniter-node")();</code></pre>
-<p>And that's it.</p>
-<pre><code class="language-javascript">var PhpModule = require("./my_php_module.php");
-// Or you can ommit the extension
-var PhpModule2 = require("./module2"); // ./module2.php</code></pre>
-<p>Within Uniter PHP, you can export values just like you would expect:</p>
-<pre><code class="language-php">&lt;?php
-$module-&gt;exports-&gt;myString = "Hello, World!";</code></pre>
+                    <h1 id="ultra-simple-hello-world---demo">Ultra simple hello world - demo</h1>
+<p>This is a live demo of the tutorial code described on <a href="../uniter/ultra_simple_hello_world.html">the ultra simple hello world tutorial page</a>.  </p>
+<hr />
+<h2 id="change-the-text-below-by-clicking-a-button">Change the text below by clicking a button!</h2>
+<p id="myMessage">Click a button to change me!</p>
+<button type="button" id="helloButton">Hello!</button>
+<button type="button" id="worldButton">World!</button>
+<script type="text/x-uniter-php">
+    $messageBox = $document->getElementById('myMessage');
+
+    $document->getElementById('helloButton')->addEventListener('click', function () use ($messageBox) {
+        $messageBox->textContent = 'You clicked Hello!';
+    });
+
+    $document->getElementById('worldButton')->addEventListener('click', function () use ($messageBox) {
+        $messageBox->textContent = 'You clicked World!';
+    });
+</script>
+<!--<script src="https://asmblah.github.io/uniter/dist/uniter.js"></script>-->
+<script src="http://localhost:5000/dist/uniter.js"></script>
                 </section>
 
             </div>
