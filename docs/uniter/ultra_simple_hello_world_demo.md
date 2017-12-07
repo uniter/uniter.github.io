@@ -24,5 +24,4 @@ This is a live demo of the tutorial code described on [the ultra simple hello wo
     });
 </script>
 
-<!--<script src="https://asmblah.github.io/uniter/dist/uniter.js"></script>-->
-<script src="http://localhost:5000/dist/uniter.js"></script>
+<script src="https://asmblah.github.io/uniter/dist/uniter.js"></script>
