@@ -160,8 +160,7 @@ return function ($document) {
 };</code></pre>
 <h2 id="step-5">Step 5</h2>
 <p>Create your entrypoint JS file <code>my_app.js</code>:</p>
-<pre><code class="language-javascript">// Run the PHP file, capture its result Closure
-// and cast it to a JavaScript function we can call
+<pre><code class="language-javascript">// Fetch the PHP module (but don't actually run it yet)
 const binderModule = require('./binder.php')();
 
 // Hook stdout and stderr up to the console
@@ -172,6 +171,8 @@ binderModule.getStderr().on('data', function (data) {
     console.warn(data);
 });
 
+// Run the PHP module, capture its result Closure
+// and cast it to a JavaScript function we can call
 const binder = binderModule.execute().getNative();
 
 // Call the PHP closure function returned from binder.php, from JavaScript!
