@@ -5,7 +5,7 @@ In this example we're going to create a simple HTML page with some text and two 
 then attach a click listener to each button that changes the text displayed -
 but we're going to do it using PHP that we'll pre-transpile to JavaScript using Webpack and the Uniter loader.
 
-> If you're in a hurry, you can [check out the finished example here](https://github.io/uniter/webpack-hello-world).
+> If you're in a hurry, you can [check out the finished example here](https://github.com/uniter/webpack-hello-world).
 
 Step 1
 ------
