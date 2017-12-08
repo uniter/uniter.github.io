@@ -84,8 +84,7 @@ Step 5
 Create your entrypoint JS file `my_app.js`:
 
 ```javascript
-// Run the PHP file, capture its result Closure
-// and cast it to a JavaScript function we can call
+// Fetch the PHP module (but don't actually run it yet)
 const binderModule = require('./binder.php')();
 
 // Hook stdout and stderr up to the console
@@ -96,6 +95,8 @@ binderModule.getStderr().on('data', function (data) {
     console.warn(data);
 });
 
+// Run the PHP module, capture its result Closure
+// and cast it to a JavaScript function we can call
 const binder = binderModule.execute().getNative();
 
 // Call the PHP closure function returned from binder.php, from JavaScript!
