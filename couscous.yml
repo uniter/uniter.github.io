@@ -8,8 +8,12 @@ github:
 # List of directories to exclude from the processing (default contains "vendor" and "website")
 # Paths are relative to the repository root
 exclude:
-    - vendor
     - misc
+    - template
+    - vendor
+
+template:
+    directory: template
 
 title: Uniter
 subTitle: Run PHP client-side in the browser or in Node.js.
