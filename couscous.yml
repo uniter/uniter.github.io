@@ -14,7 +14,7 @@ exclude:
 title: Uniter
 subTitle: Run PHP client-side in the browser or in Node.js.
 logo:
-    url: https://asmblah.github.io/uniter/img/logo.jpg
+    url: assets/uniter_logo.png
     alt: Uniter
 footerText: >
     Copyright ©️ Dan Phillimore (asmblah).
