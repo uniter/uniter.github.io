@@ -2,7 +2,7 @@
     "name": "uniter/uniter.github.io",
     "description": "Uniter documentation",
     "require-dev": {
-        "couscous/couscous": "^1.6"
+        "couscous/couscous": "^1.7"
     },
     "scripts": {
         "docs:preview": "couscous preview 0.0.0.0:1234",
