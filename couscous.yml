@@ -18,7 +18,7 @@ template:
 title: Uniter
 subTitle: Run PHP client-side in the browser or in Node.js.
 logo:
-    url: assets/uniter_logo.png
+    url: /assets/uniter_logo.png
     alt: Uniter
 footerText: >
     Copyright ©️ Dan Phillimore (asmblah).
